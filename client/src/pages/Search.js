@@ -13,10 +13,10 @@ function Search() {
     const [bookResults, setBookResults] = useState({})
 
     //functon to save books
-    function bookSave(id, title, authors, description, image, link) {
+    function saveBook(id, title, authors, description, image, link) {
 
         // event.preventDefault();
-        API.bookSave({
+        API.saveBook({
             key: id,
             title: title,
             authors: authors,
@@ -59,7 +59,7 @@ function Search() {
                             name="title"
                             placeholder="Title (required)"
                         />
-                       <FormBtn disabled={!formObject.title} onClick={handleFormSubmit}> 
+                        <FormBtn disabled={!formObject.title} onClick={handleFormSubmit}>
                             Submit Book
               </FormBtn>
                     </form>
@@ -71,52 +71,52 @@ function Search() {
                     {bookResults.length ? (
                         <List>
                             {bookResults.map((book) => {
-                                        let id = "";
-                                        id = book.id;
-                                        let title = "";
-                                        if (book.volumeInfo.title === undefined) {
-                                            title = "No Title";
-                                        } else {
-                                            title = book.volumeInfo.title;
-                                        }
-                                        let authors = [];
-                                        if (book.volumeInfo.authors === undefined) {
-                                            authors = ["No Author"];
-                                        } else {
-                                            authors = book.volumeInfo.authors;
-                                        }
-                                        let description = "";
-                                        if (book.volumeInfo.description) {
-                                            description = book.volumeInfo.description;
-                                        } else {
-                                            description = "No description.";
-                                        }
-                                        let image = "";
-                                        if (book.volumeInfo.imageLinks === undefined) {
-                                            image = "No Image";
-                                        } else {
-                                            image = book.volumeInfo.imageLinks.thumbnail;
-                                        }
-                                        let link = "";
-                                        if (book.volumeInfo.infoLink) {
-                                            link = book.volumeInfo.infoLink;
-                                        } else {
-                                            link = "";
-                                        } return (
-                                            <ListItem key={id}>
-                                                <strong>
-                                                    {title} by {authors}
-                                                </strong>
-                                                <h2>Description</h2>
-                                                <p>{description}</p>
-                                                <img src={image}></img>
-                                                <Button href={link}>View Book</Button>
-                                                <Button onClick={() => saveBook(id, title, authors, description, image, link)
-                                                }> Save Book </Button>
-                                            </ListItem>
-                                        );
-                                    })}
-                                
+                                let id = "";
+                                id = book.id;
+                                let title = "";
+                                if (book.volumeInfo.title === undefined) {
+                                    title = "No Title";
+                                } else {
+                                    title = book.volumeInfo.title;
+                                }
+                                let authors = [];
+                                if (book.volumeInfo.authors === undefined) {
+                                    authors = ["No Author"];
+                                } else {
+                                    authors = book.volumeInfo.authors;
+                                }
+                                let description = "";
+                                if (book.volumeInfo.description) {
+                                    description = book.volumeInfo.description;
+                                } else {
+                                    description = "No description.";
+                                }
+                                let image = "";
+                                if (book.volumeInfo.imageLinks === undefined) {
+                                    image = "No Image";
+                                } else {
+                                    image = book.volumeInfo.imageLinks.thumbnail;
+                                }
+                                let link = "";
+                                if (book.volumeInfo.infoLink) {
+                                    link = book.volumeInfo.infoLink;
+                                } else {
+                                    link = "";
+                                } return (
+                                    <ListItem key={id}>
+                                        <strong>
+                                            {title} by {authors}
+                                        </strong>
+                                        <h2>Description</h2>
+                                        <p>{description}</p>
+                                        <img src={image}></img>
+                                        <Button href={link}>View Book</Button>
+                                        <Button onClick={() => saveBook(id, title, authors, description, image, link)
+                                        }> Save Book </Button>
+                                    </ListItem>
+                                );
+                            })}
+
                         </List>
                     ) : (
                             <h3>No Results to Display</h3>

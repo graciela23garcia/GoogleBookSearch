@@ -6,6 +6,13 @@ function Nav() {
       <a className="navbar-brand" href="/">
         React Reading List
       </a>
+      <a class="nav-link" href="/">
+        Search
+      </a>
+      <a class="nav-link" href="/save">
+        Saved Books
+      </a>
+
     </nav>
   );
 }
