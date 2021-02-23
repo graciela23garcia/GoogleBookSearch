@@ -22,35 +22,29 @@ function Search() {
             authors: authors,
             description: description,
             image: image,
-            link: link
+            link: link,
         })
             .then(res => console.log())
             .catch(err => console.log(err));
     }
-    // Deletes a book from the database with a given id, then reloads books from the db
-    function deleteBook(id) {
-        API.deleteBook(id)
-            .then(res => loadBooks())
-            .catch(err => console.log(err));
-    }
-
     // Handles updating component state when the user types into the input field
     function handleInputChange(event) {
         const { name, value } = event.target;
-        setFormObject({ ...formObject, [name]: value })
-    };
+        setFormObject({ ...formObject, [name]: value });
+    }
 
     // When the form is submitted, use the API.saveBook method to save the book data
     // Then reload books from the database
     function handleFormSubmit(event) {
         event.preventDefault();
         API.searchBook(formObject.title)
-            .then(res => {
+            .then((res) => {
                 console.log(res.data.items)
                 setBookResults(res.data.items)
             })
-            .catch(err => console.log(err));
-    };
+            .catch((err) => console.log(err));
+    }
+
 
     return (
         <Container fluid>
@@ -65,10 +59,7 @@ function Search() {
                             name="title"
                             placeholder="Title (required)"
                         />
-                        <FormBtn
-                            disabled={!(formObject.author && formObject.title)}
-                            onClick={handleFormSubmit}
-                        >
+                       <FormBtn disabled={!formObject.title} onClick={handleFormSubmit}> 
                             Submit Book
               </FormBtn>
                     </form>
@@ -79,52 +70,53 @@ function Search() {
                     </Jumbotron>
                     {bookResults.length ? (
                         <List>
-                            {bookResults.map((book) => { 
-                                {resultBooks.map((book) => {
-                                    let id = "";
-                                    id = book.id;
-                                    let title = "";
-                                    if (book.volumeInfo.title === undefined) {
-                                      title = "No Title";
-                                    } else {
-                                      title = book.volumeInfo.title;
-                                    }
-                                    let authors = [];
-                                    if (book.volumeInfo.authors === undefined) {
-                                      authors = ["No Author"];
-                                    } else {
-                                      authors = book.volumeInfo.authors;
-                                    }
-                                    let description = "";
-                                    if (book.volumeInfo.description) {
-                                      description = book.volumeInfo.description;
-                                    } else {
-                                      description = "No description.";
-                                    }
-                                    let image = "";
-                                    if (book.volumeInfo.imageLinks === undefined) {
-                                      image = "No Image";
-                                    } else {
-                                      image = book.volumeInfo.imageLinks.thumbnail;
-                                    }
-                                    let link = "";
-                                    if (book.volumeInfo.infoLink) {
-                                      link = book.volumeInfo.infoLink;
-                                    } else {
-                                      link = "";
-                                    } return ( 
-                                    <ListItem key={id}>
-                                        <strong>
-                                            {title} by {authors}
-                                        </strong>
-                                        <h2>Description</h2>
-                                    <p>{description}</p>
-                                    <img src={image}></img>
-                                    <Button href={link}>View Book</Button>
-                                    <Button onClick={() => saveBook(id, title, authors, description, image, link)
-                                    }> Save Book </Button>
-                                </ListItem>
-                            )}
+                            {bookResults.map((book) => {
+                                        let id = "";
+                                        id = book.id;
+                                        let title = "";
+                                        if (book.volumeInfo.title === undefined) {
+                                            title = "No Title";
+                                        } else {
+                                            title = book.volumeInfo.title;
+                                        }
+                                        let authors = [];
+                                        if (book.volumeInfo.authors === undefined) {
+                                            authors = ["No Author"];
+                                        } else {
+                                            authors = book.volumeInfo.authors;
+                                        }
+                                        let description = "";
+                                        if (book.volumeInfo.description) {
+                                            description = book.volumeInfo.description;
+                                        } else {
+                                            description = "No description.";
+                                        }
+                                        let image = "";
+                                        if (book.volumeInfo.imageLinks === undefined) {
+                                            image = "No Image";
+                                        } else {
+                                            image = book.volumeInfo.imageLinks.thumbnail;
+                                        }
+                                        let link = "";
+                                        if (book.volumeInfo.infoLink) {
+                                            link = book.volumeInfo.infoLink;
+                                        } else {
+                                            link = "";
+                                        } return (
+                                            <ListItem key={id}>
+                                                <strong>
+                                                    {title} by {authors}
+                                                </strong>
+                                                <h2>Description</h2>
+                                                <p>{description}</p>
+                                                <img src={image}></img>
+                                                <Button href={link}>View Book</Button>
+                                                <Button onClick={() => saveBook(id, title, authors, description, image, link)
+                                                }> Save Book </Button>
+                                            </ListItem>
+                                        );
+                                    })}
+                                
                         </List>
                     ) : (
                             <h3>No Results to Display</h3>
