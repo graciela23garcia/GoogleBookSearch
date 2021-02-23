@@ -106,13 +106,23 @@ function Search() {
                                       image = "No Image";
                                     } else {
                                       image = book.volumeInfo.imageLinks.thumbnail;
-                                <ListItem key={book._id}>
-                                    <Link to={"/books/" + book._id}>
+                                    }
+                                    let link = "";
+                                    if (book.volumeInfo.infoLink) {
+                                      link = book.volumeInfo.infoLink;
+                                    } else {
+                                      link = "";
+                                    } return ( 
+                                    <ListItem key={id}>
                                         <strong>
-                                            {book.title} by {book.author}
+                                            {title} by {authors}
                                         </strong>
-                                    </Link>
-                                    <DeleteBtn onClick={() => deleteBook(book._id)} />
+                                        <h2>Description</h2>
+                                    <p>{description}</p>
+                                    <img src={image}></img>
+                                    <Button href={link}>View Book</Button>
+                                    <Button onClick={() => saveBook(id, title, authors, description, image, link)
+                                    }> Save Book </Button>
                                 </ListItem>
                             )}
                         </List>
